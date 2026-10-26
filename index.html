@@ -36,6 +36,7 @@
     .brand-icon {
       width: 46px;
       height: 46px;
+      flex-shrink: 0;
       border-radius: 12px;
       background: #1769e0;
       color: white;
@@ -55,6 +56,17 @@
       margin: 4px 0 0;
       color: #667085;
       font-size: 13px;
+    }
+
+    .language-select {
+      margin-left: auto;
+      padding: 10px 12px;
+      border: 1px solid #dfe5ef;
+      border-radius: 9px;
+      background: white;
+      color: #172033;
+      font-size: 14px;
+      cursor: pointer;
     }
 
     main {
@@ -133,6 +145,7 @@
       font-size: 12px;
       color: #667085;
       margin: -5px 0 14px;
+      line-height: 1.6;
     }
 
     .keypad {
@@ -218,6 +231,16 @@
     }
 
     @media (max-width: 700px) {
+      header { padding: 15px; }
+      .header-inner { gap: 9px; }
+      .brand-icon { width: 40px; height: 40px; }
+      .brand-name { font-size: 23px; }
+      .tagline { font-size: 12px; }
+      .language-select {
+        max-width: 125px;
+        padding: 9px 6px;
+        font-size: 12px;
+      }
       main { padding: 30px 15px; }
       .layout { grid-template-columns: 1fr; }
       .card { padding: 18px; }
@@ -229,17 +252,27 @@
   <header>
     <div class="header-inner">
       <div class="brand-icon" aria-hidden="true">C</div>
+
       <div>
         <h1 class="brand-name">CalcHub</h1>
-        <p class="tagline">Free Online Calculators</p>
+        <p class="tagline" data-i18n="tagline">Free Online Calculators</p>
       </div>
+
+      <select
+        id="languageSelect"
+        class="language-select"
+        aria-label="Choose language"
+      >
+        <option value="en">🇬🇧 English</option>
+        <option value="fr">🇫🇷 Français</option>
+      </select>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <h2>Calculate Anything, Easily.</h2>
-      <p>
+      <h2 data-i18n="heroTitle">Calculate Anything, Easily.</h2>
+      <p data-i18n="heroDescription">
         Your simple place for everyday calculations.
         Use the calculator below or explore more tools as CalcHub grows.
       </p>
@@ -247,8 +280,9 @@
 
     <div class="layout">
       <section class="card">
-        <h3>Basic Calculator</h3>
-        <p class="description">
+        <h3 data-i18n="calculatorTitle">Basic Calculator</h3>
+
+        <p class="description" data-i18n="calculatorDescription">
           Type an expression directly or use the buttons.
         </p>
 
@@ -263,13 +297,15 @@
           spellcheck="false"
         >
 
-        <p class="hint">
+        <p class="hint" data-i18n="keyboardHint">
           Keyboard: Enter to calculate · Esc to clear · Backspace to edit
         </p>
 
         <div class="keypad" id="keypad">
-          <button class="key clear" data-action="clear">AC</button>
-          <button class="key" data-action="backspace">DEL</button>
+          <button class="key clear" data-action="clear"
+            data-i18n="clearButton" aria-label="Clear">AC</button>
+          <button class="key" data-action="backspace"
+            data-i18n="deleteButton" aria-label="Delete">DEL</button>
           <button class="key operator" data-value="/">÷</button>
           <button class="key operator" data-value="*">×</button>
 
@@ -286,7 +322,8 @@
           <button class="key" data-value="1">1</button>
           <button class="key" data-value="2">2</button>
           <button class="key" data-value="3">3</button>
-          <button class="key equals" data-action="equals">=</button>
+          <button class="key equals" data-action="equals"
+            aria-label="Calculate">=</button>
 
           <button class="key zero" data-value="0">0</button>
           <button class="key" data-value=".">.</button>
@@ -294,34 +331,50 @@
       </section>
 
       <section class="card">
-        <h3>Explore CalcHub</h3>
-        <p class="description">
+        <h3 data-i18n="exploreTitle">Explore CalcHub</h3>
+
+        <p class="description" data-i18n="exploreDescription">
           We're building a collection of useful online calculators.
         </p>
 
         <div class="features">
           <div class="feature">
             <div class="feature-icon">%</div>
-            <div><strong>Percentage Calculator</strong>
-              Find percentages and percentage changes. Coming soon.
+            <div>
+              <strong data-i18n="percentageTitle">Percentage Calculator</strong>
+              <span data-i18n="percentageDescription">
+                Find percentages and percentage changes. Coming soon.
+              </span>
             </div>
           </div>
+
           <div class="feature">
             <div class="feature-icon">$</div>
-            <div><strong>Finance Calculators</strong>
-              Calculate loans, EMI and interest. Coming soon.
+            <div>
+              <strong data-i18n="financeTitle">Finance Calculators</strong>
+              <span data-i18n="financeDescription">
+                Calculate loans, EMI and interest. Coming soon.
+              </span>
             </div>
           </div>
+
           <div class="feature">
             <div class="feature-icon">↔</div>
-            <div><strong>Unit Converters</strong>
-              Convert lengths, weights and temperatures. Coming soon.
+            <div>
+              <strong data-i18n="unitsTitle">Unit Converters</strong>
+              <span data-i18n="unitsDescription">
+                Convert lengths, weights and temperatures. Coming soon.
+              </span>
             </div>
           </div>
+
           <div class="feature">
             <div class="feature-icon">+</div>
-            <div><strong>Everyday Maths</strong>
-              Quick calculations for daily tasks.
+            <div>
+              <strong data-i18n="mathTitle">Everyday Maths</strong>
+              <span data-i18n="mathDescription">
+                Quick calculations for daily tasks.
+              </span>
             </div>
           </div>
         </div>
@@ -330,12 +383,104 @@
   </main>
 
   <footer>
-    © <span id="year"></span> CalcHub. Free online calculation tools.
+    © <span id="year"></span> CalcHub.
+    <span data-i18n="footerText">Free online calculation tools.</span>
   </footer>
 
   <script>
     const display = document.getElementById("display");
     const keypad = document.getElementById("keypad");
+    const languageSelect = document.getElementById("languageSelect");
+
+    const translations = {
+      en: {
+        pageTitle: "CalcHub - Free Online Calculators",
+        description: "CalcHub offers free online calculators for maths, finance, conversions and everyday calculations.",
+        languageLabel: "Choose language",
+        tagline: "Free Online Calculators",
+        heroTitle: "Calculate Anything, Easily.",
+        heroDescription: "Your simple place for everyday calculations. Use the calculator below or explore more tools as CalcHub grows.",
+        calculatorTitle: "Basic Calculator",
+        calculatorDescription: "Type an expression directly or use the buttons.",
+        displayLabel: "Calculator expression",
+        keyboardHint: "Keyboard: Enter to calculate · Esc to clear · Backspace to edit",
+        clearButton: "AC",
+        deleteButton: "DEL",
+        exploreTitle: "Explore CalcHub",
+        exploreDescription: "We're building a collection of useful online calculators.",
+        percentageTitle: "Percentage Calculator",
+        percentageDescription: "Find percentages and percentage changes. Coming soon.",
+        financeTitle: "Finance Calculators",
+        financeDescription: "Calculate loans, EMI and interest. Coming soon.",
+        unitsTitle: "Unit Converters",
+        unitsDescription: "Convert lengths, weights and temperatures. Coming soon.",
+        mathTitle: "Everyday Maths",
+        mathDescription: "Quick calculations for daily tasks.",
+        footerText: "Free online calculation tools.",
+        enterCalculation: "Enter a calculation",
+        divideByZero: "Cannot divide by zero",
+        missingParenthesis: "Missing closing parenthesis",
+        invalidExpression: "Invalid expression",
+        invalidCalculation: "Invalid calculation"
+      },
+
+      fr: {
+        pageTitle: "CalcHub - Calculatrices en ligne gratuites",
+        description: "CalcHub propose des calculatrices gratuites pour les mathématiques, la finance, les conversions et les calculs du quotidien.",
+        languageLabel: "Choisir la langue",
+        tagline: "Calculatrices en ligne gratuites",
+        heroTitle: "Calculez facilement, tout simplement.",
+        heroDescription: "Votre espace dédié aux calculs du quotidien. Utilisez la calculatrice ci-dessous ou découvrez de nouveaux outils au fil du développement de CalcHub.",
+        calculatorTitle: "Calculatrice simple",
+        calculatorDescription: "Saisissez directement une expression ou utilisez les boutons.",
+        displayLabel: "Expression à calculer",
+        keyboardHint: "Clavier : Entrée pour calculer · Échap pour effacer · Retour arrière pour modifier",
+        clearButton: "AC",
+        deleteButton: "SUP",
+        exploreTitle: "Découvrez CalcHub",
+        exploreDescription: "Nous créons une collection de calculatrices en ligne utiles.",
+        percentageTitle: "Calculatrice de pourcentage",
+        percentageDescription: "Calculez des pourcentages et leurs variations. Bientôt disponible.",
+        financeTitle: "Calculatrices financières",
+        financeDescription: "Calculez les prêts, les mensualités et les intérêts. Bientôt disponible.",
+        unitsTitle: "Convertisseurs d'unités",
+        unitsDescription: "Convertissez les longueurs, les poids et les températures. Bientôt disponible.",
+        mathTitle: "Calculs du quotidien",
+        mathDescription: "Effectuez rapidement vos calculs de tous les jours.",
+        footerText: "Outils de calcul gratuits en ligne.",
+        enterCalculation: "Saisissez un calcul",
+        divideByZero: "La division par zéro est impossible",
+        missingParenthesis: "Parenthèse fermante manquante",
+        invalidExpression: "Expression invalide",
+        invalidCalculation: "Calcul invalide"
+      }
+    };
+
+    function setLanguage(language) {
+      const lang = translations[language] ? language : "en";
+      const t = translations[lang];
+
+      document.documentElement.lang = lang;
+      document.title = t.pageTitle;
+      document.querySelector('meta[name="description"]')
+        .setAttribute("content", t.description);
+      languageSelect.setAttribute("aria-label", t.languageLabel);
+      display.setAttribute("aria-label", t.displayLabel);
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.dataset.i18n;
+        if (t[key] !== undefined) {
+          element.textContent = t[key];
+        }
+      });
+
+      // Update the visible language without changing the calculation.
+      document.documentElement.dataset.language = lang;
+    }
+
+    languageSelect.addEventListener("change", () => {
+      setLanguage(languageSelect.value);
+    });
 
     function appendValue(value) {
       const start = display.selectionStart ?? display.value.length;
@@ -378,9 +523,11 @@
     // Safe arithmetic parser: supports numbers, decimals,
     // parentheses, +, -, *, / and standard operator precedence.
     function evaluateExpression(source) {
+      const t = translations[languageSelect.value] || translations.en;
       const input = source.replace(/\s+/g, "");
+
       if (!input || input.length > 200) {
-        throw new Error("Enter a calculation");
+        throw new Error(t.enterCalculation);
       }
 
       let pos = 0;
@@ -405,7 +552,7 @@
           const right = parseUnary();
 
           if (op === "/" && right === 0) {
-            throw new Error("Cannot divide by zero");
+            throw new Error(t.divideByZero);
           }
 
           value = op === "*" ? value * right : value / right;
@@ -434,7 +581,7 @@
           const value = parseExpression();
 
           if (input[pos] !== ")") {
-            throw new Error("Missing closing parenthesis");
+            throw new Error(t.missingParenthesis);
           }
 
           pos++;
@@ -447,7 +594,7 @@
         );
 
         if (!match) {
-          throw new Error("Invalid expression");
+          throw new Error(t.invalidExpression);
         }
 
         pos += match[0].length;
@@ -457,7 +604,7 @@
       const result = parseExpression();
 
       if (pos !== input.length || !Number.isFinite(result)) {
-        throw new Error("Invalid calculation");
+        throw new Error(t.invalidCalculation);
       }
 
       return Number(result.toPrecision(12)).toString();
@@ -503,6 +650,9 @@
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
+
+    // Start in English. Visitors can switch to French at any time.
+    setLanguage("en");
   </script>
 </body>
 </html>
